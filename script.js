@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Responsive positioning and scaling
         if (isMobile) {
-            scalesGroup.position.y = 4; // Taraazu ko mobile par neeche move karne ke liye
+            scalesGroup.position.y = 4.5; // Taraazu ko mobile par neeche move karne ke liye
             scalesGroup.position.x = 0;
             scalesGroup.scale.set(1, 1, 1); // Increased mobile scale
 
@@ -409,4 +409,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearEl) {
         yearEl.textContent = new Date().getFullYear();
     }
+
 });
