@@ -1,0 +1,608 @@
+/*
+========================================
+CSS Variables for Theming
+========================================
+*/
+:root {
+    /* Light Mode */
+    --bg-color: #ffffff;
+    --text-color: #212529;
+    --heading-color: #001f3f; /* Navy Blue */
+    --primary-color: #001f3f; /* Navy Blue */
+    --accent-color: #D4AF37; /* Gold */
+    --card-bg: #f8f9fa;
+    --border-color: #dee2e6;
+    
+    /* Shared */
+    --font-heading: 'Merriweather', serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+[data-bs-theme="dark"] {
+    /* Dark Mode */
+    --bg-color: #050A1A; /* Midnight Blue */
+    --text-color: #E0E0E0; /* Silver-Gray */
+    --heading-color: #E0E0E0; /* Silver-Gray */
+    --primary-color: #E0E0E0;
+    --accent-color: #D4AF37; /* Gold */
+    --card-bg: #0D162C; /* Darker Blue */
+    --border-color: #2a3b5e;
+}
+
+/*
+========================================
+Base & Typography
+========================================
+*/
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--heading-color);
+    font-weight: 700;
+}
+
+.section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 3rem;
+}
+
+/* Gold underline effect for titles */
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+section {
+    padding: 80px 0;
+    overflow: hidden; /* For AOS */
+}
+
+/*
+========================================
+Navbar
+========================================
+*/
+.navbar {
+    background-color: var(--bg-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: background-color 0.5s ease;
+}
+
+.navbar-brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--heading-color);
+}
+
+[data-bs-theme="dark"] .navbar-brand {
+    color: var(--accent-color); /* Gold color in dark mode */
+}
+
+.nav-link {
+    font-weight: 600;
+    color: var(--heading-color);
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--accent-color);
+}
+
+/* Nav-link underline animation */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-out;
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}
+
+/* Theme Toggle Button */
+#theme-toggle, #theme-toggle-desktop {
+    font-size: 1.25rem;
+    background: none;
+    border: none;
+    color: var(--heading-color);
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    line-height: 1; /* Aligns icon better */
+}
+
+/* By default, show sun and hide moon */
+#theme-toggle .bi-moon-stars-fill, 
+#theme-toggle-desktop .bi-moon-stars-fill { 
+    display: none; 
+}
+#theme-toggle .bi-sun-fill, 
+#theme-toggle-desktop .bi-sun-fill { 
+    display: block; 
+}
+
+/* In dark mode, hide sun and show moon */
+[data-bs-theme="dark"] #theme-toggle .bi-moon-stars-fill,
+[data-bs-theme="dark"] #theme-toggle-desktop .bi-moon-stars-fill { 
+    display: block; 
+}
+[data-bs-theme="dark"] #theme-toggle .bi-sun-fill,
+[data-bs-theme="dark"] #theme-toggle-desktop .bi-sun-fill { 
+    display: none; 
+}
+
+/*
+========================================
+Hero Section
+========================================
+*/
+#hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden; /* Critical for canvas */
+    background-color: var(--bg-color); /* Default, will be overridden by theme */
+}
+
+[data-bs-theme="light"] #hero {
+    background-color:  #f8f9fa /* Ek bahut halka neela rang light mode hero ke liye */
+}
+
+/* Three.js Canvas */
+#three-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 800px;
+}
+
+/* On desktop, shift hero content to the left to balance the 3D model on the right */
+@media (min-width: 992px) {
+    #hero {
+        justify-content: flex-start; /* Align content to the left */
+        text-align: left;
+    }
+    .hero-content {
+        margin-left: 5%; /* Add some space from the edge */
+        padding-bottom: 10%;
+    }
+}
+
+/* Adjust hero content position for mobile and tablet views (screens smaller than 992px) */
+@media (max-width: 991.98px) {
+    #hero {
+        align-items: flex-start; /* Align content to the top */
+        padding-top: 185px; /* Adjust this value to move the content down from the top edge, accounting for the navbar */
+    }
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--heading-color);
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    color: var(--text-color);
+    font-weight: 300;
+}
+
+/* Subheading in Hero */
+.hero-subheading {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-color);
+    letter-spacing: 1px;
+}
+
+/* Typing cursor */
+#typing-text::after {
+    content: '|';
+    animation: blink 0.7s infinite;
+    color: var(--accent-color);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* CTA Button */
+.cta-btn {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #001f3f; /* Navy on Gold */
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    
+    /* Prep for GSAP */
+    transition: none; /* GSAP will handle this */
+}
+
+[data-bs-theme="dark"] .cta-btn {
+    color: var(--bg-color); /* Midnight Blue on Gold */
+}
+
+/* --- CTA Button Hover States --- */
+
+/* In LIGHT mode, force text to be dark on hover for contrast against the light background from GSAP */
+[data-bs-theme="light"] .cta-btn:hover {
+    color: #001f3f !important; 
+}
+
+/* In DARK mode, keep the text color the same on hover */
+[data-bs-theme="dark"] .cta-btn:hover,
+[data-bs-theme="dark"] .cta-btn:focus {
+    background-color: var(--accent-color) !important; /* Keep it Gold */
+    border-color: var(--accent-color) !important;     /* Keep border Gold */
+    color: var(--bg-color) !important;                 /* Keep text Midnight Blue */
+}
+
+/*
+========================================
+About Section
+========================================
+*/
+.about-img {
+    width: 100%;
+    max-width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border: 5px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/*
+========================================
+Practice Areas Section
+========================================
+*/
+.practice-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    /* Prep for GSAP */
+    transition: none;
+}
+
+.practice-card .icon {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+.practice-card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/*
+========================================
+Experience Timeline
+========================================
+*/
+.timeline {
+    list-style: none;
+    padding: 0;
+    position: relative;
+}
+
+/* The vertical line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: var(--border-color);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    margin-bottom: 40px;
+    position: relative;
+}
+
+/* The circle on the line */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent-color);
+    border: 4px solid var(--bg-color);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.timeline-content {
+    padding: 20px 30px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 45%;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* Arrow pointers */
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+/* Right-side items */
+.timeline-item:nth-child(odd) .timeline-content {
+    left: 55%;
+}
+.timeline-item:nth-child(odd) .timeline-content::before {
+    right: 100%; /* Arrow points left */
+    border-width: 10px 10px 10px 0;
+    border-color: transparent var(--border-color) transparent transparent;
+}
+
+/* Left-side items */
+.timeline-item:nth-child(even) .timeline-content {
+    left: 0;
+}
+.timeline-item:nth-child(even) .timeline-content::before {
+    left: 100%; /* Arrow points right */
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent var(--border-color);
+}
+
+.timeline-date {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive timeline */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 10px;
+    }
+    .timeline-item::after {
+        left: 10px;
+    }
+    .timeline-content {
+        width: calc(100% - 40px);
+    }
+    .timeline-item:nth-child(odd) .timeline-content,
+    .timeline-item:nth-child(even) .timeline-content {
+        left: 40px;
+    }
+    .timeline-item:nth-child(odd) .timeline-content::before,
+    .timeline-item:nth-child(even) .timeline-content::before {
+        right: 100%;
+        left: auto;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent var(--border-color) transparent transparent;
+    }
+}
+
+/*
+========================================
+Testimonials
+========================================
+*/
+#testimonials {
+    background-color: var(--card-bg);
+}
+.carousel-item {
+    padding: 40px 80px;
+}
+.testimonial-quote {
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 300;
+}
+.testimonial-author {
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-top: 1rem;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--heading-color);
+    border-radius: 50%;
+    padding: 1rem;
+}
+
+/* Carousel controls in Dark Mode */
+[data-bs-theme="dark"] .carousel-control-prev-icon,
+[data-bs-theme="dark"] .carousel-control-next-icon {
+    background-color: var(--accent-color) !important; /* Gold background */
+}
+
+[data-bs-theme="dark"] .carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23050A1A'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !important;
+}
+
+[data-bs-theme="dark"] .carousel-control-next-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23050A1A'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+}
+
+/*
+========================================
+Contact Section
+========================================
+*/
+.contact-form .form-control,
+.contact-form .form-select {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+.contact-form .form-control:focus,
+.contact-form .form-select:focus {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+}
+.contact-info i {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+}
+
+.social-icons a {
+    font-size: 1.75rem;
+    color: var(--heading-color);
+    margin: 0 0.5rem;
+    /* Prep for GSAP */
+    transition: none;
+    display: inline-block;
+}
+
+/*
+========================================
+Footer
+========================================
+*/
+footer {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+[data-bs-theme="light"] footer {
+    background-color: #f8f9fa;
+}
+
+/* Add some padding to footer on mobile for better spacing */
+/* On small screens, Bootstrap's .container becomes 100% width. We add padding here to prevent content from touching the edges. */
+@media (max-width: 576px) {
+    footer .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+.footer-top {
+    padding: 60px 0;
+}
+
+footer h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+[data-bs-theme="dark"] footer h4 {
+    color: var(--accent-color); /* Gold color for footer headings in dark mode */
+}
+
+
+.footer-brand {
+    font-family: var(--font-heading);
+}
+
+.footer-links ul {
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative; /* Required for the underline pseudo-element */
+    display: inline-block; /* Ensures correct positioning */
+}
+.footer-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Replicating the navbar underline animation for footer links */
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; /* Position underline slightly below the text */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-out;
+}
+
+.footer-links a:hover::after {
+    width: 100%;
+}
+
+.footer-contact p {
+    margin-bottom: 0.75rem;
+}
+.footer-contact i {
+    color: var(--accent-color);
+    margin-right: 0.5rem;
+}
+
+.footer-bottom {
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+}
+
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+}
